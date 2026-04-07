@@ -2,6 +2,10 @@
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+# Nuxt Directory Structure
+
+Look at this https://nuxt.com/docs/4.x/directory-structure
+
 ## Setup
 
 Make sure to install dependencies:
