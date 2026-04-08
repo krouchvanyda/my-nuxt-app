@@ -1,4 +1,5 @@
 <template>
+  <p class="flex items-center justify-center bg-gray-100 text-blue-500 text-2xl pt-4 font-bold">Drag Drop</p>
   <div class="flex gap-6 p-6 min-h-screen bg-gray-100">
     <!-- Columns -->
     <div
