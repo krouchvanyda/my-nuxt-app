@@ -23,9 +23,16 @@
                 </a>
             </template>
             <template #end>
-                <div class="flex items-cente gap-2">
+                <div class="flex items-center gap-2">
                     <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
-                    <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
+                    <button
+                        class="flex items-center justify-center rounded-full hover:bg-gray-200 active:bg-gray-300 transition"
+                        >
+                        <Avatar
+                            image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+                            shape="circle"
+                        />
+                    </button>
                 </div>
             </template>
         </Menubar>
