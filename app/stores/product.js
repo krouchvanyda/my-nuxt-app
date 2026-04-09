@@ -4,6 +4,7 @@ export const useProductStore = defineStore("product", {
     state: () => ({
         products: [],
         isLoading: true,
+        product: null,
         error: null,
     }),
     actions: {
@@ -14,6 +15,20 @@ export const useProductStore = defineStore("product", {
             try {
                 const data = await $fetch(url)
                this.products = data
+            } catch (err) {
+                this.error = err || 'Unknown error'
+            } finally {
+                this.isLoading = false
+            }
+        },
+
+        /// bloc get product by id
+        async fetchProductById(id) {
+            this.isLoading = true
+            this.error = null
+            try {
+                const data = await $fetch(`${url}/${id}`);
+               this.product = data
             } catch (err) {
                 this.error = err || 'Unknown error'
             } finally {

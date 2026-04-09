@@ -9,9 +9,10 @@
     <div v-else-if="store.error" class="text-red-500">{{ store.error }}</div>
     <!-- bloc list product -->
     <div v-else="store.products.length" class="grid grid-cols-3 gap-4">
-      <div
+      <NuxtLink
         v-for="product in store.products"
         :key="product.id"
+        :to="{ name: 'products-id', params: { id: product.id } }"
         class="border p-4 rounded shadow"
       >
         <img 
@@ -23,7 +24,7 @@
         <h2 class="font-bold text-lg">{{ product.title }}</h2>
         <p class="text-green-500 font-bold">${{ product.price }}</p>
         <p class="text-sm text-gray-500">{{ product.description }}</p>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
@@ -35,11 +36,6 @@ import { useProductStore } from '../stores/product'
 const store = useProductStore()
 
 onMounted(() => {
-    console.log("call every tap");
-    
   store.fetchProducts()
-      console.log("call every tapwww", store);
-         console.log("products JSON ff", JSON.stringify(store))
-      console.log("products JSON", JSON.stringify(store.products))
 })
 </script>
