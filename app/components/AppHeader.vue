@@ -51,6 +51,12 @@
                             shape="circle"
                         />
                     </button>
+                     <button
+                      @click="handleLogout"
+                        class="flex items-center justify-center bg-sky-500 hover:bg-sky-700 p-1 rounded"
+                        >
+                         Logout
+                    </button>
                 </div>
             </template>
         </Menubar>
@@ -59,7 +65,12 @@
 
 <script setup>
 import { ref } from "vue";
+const auth = useAuthStore()
 
+const handleLogout = () => {
+  auth.clearSession()
+  navigateTo("/login")
+}
 const items = ref([
     {
         label: 'Home',

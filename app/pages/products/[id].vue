@@ -29,19 +29,19 @@ import { useProductStore } from '../../stores/product'
 
 const route = useRoute()
 const store = useProductStore()
-onMounted(async () => {
-  console.log("Route ID:", route.params.id)
+// onMounted(async () => {
+//   console.log("Route ID:", route.params.id)
 
-  // ✅ Wait for API call
-  await store.fetchProductById(route.params.id)
+//   // ✅ Wait for API call
+//   await store.fetchProductById(route.params.id)
 
-  console.log("Fetched product:", store.product)
-})
+//   console.log("Fetched product:", store.product)
+// })
 
 /// can use watch get data
 
-// watch(() => route.params.id, (id) => {
-//   if (id) store.fetchProductById(id)
-// }, { immediate: true })
+watch(() => route.params.id, (id) => {
+  if (id) store.fetchProductById(id)
+}, { immediate: true })
 
 </script>

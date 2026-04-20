@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-var url = "https://api.escuelajs.co/api/v1/products"
 export const useProductStore = defineStore("product", {
     state: () => ({
         products: [],
@@ -8,32 +7,39 @@ export const useProductStore = defineStore("product", {
         error: null,
     }),
     actions: {
-        /// bloc get products
+
+        // ✅ GET ALL PRODUCTS
         async fetchProducts() {
-            this.isLoading = true
-            this.error = null
+            const { $apiService } = useNuxtApp();
+
+            this.isLoading = true;
+            this.error = null;
+
             try {
-                const data = await $fetch(url)
-               this.products = data
+                const res = await $apiService.get("/products");
+                this.products = res.data;
             } catch (err) {
-                this.error = err || 'Unknown error'
+                this.error = err.message;
             } finally {
-                this.isLoading = false
+                this.isLoading = false;
             }
         },
 
-        /// bloc get product by id
+        // ✅ GET PRODUCT BY ID
         async fetchProductById(id) {
-            this.isLoading = true
-            this.error = null
+            const { $apiService } = useNuxtApp();
+
+            this.isLoading = true;
+            this.error = null;
+
             try {
-                const data = await $fetch(`${url}/${id}`);
-               this.product = data
+                const res = await $apiService.get(`/products/${id}`);
+                this.product = res.data;
             } catch (err) {
-                this.error = err || 'Unknown error'
+                this.error = err.message;
             } finally {
-                this.isLoading = false
+                this.isLoading = false;
             }
         },
-    }
-})
+    },
+});
