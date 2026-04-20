@@ -12,6 +12,10 @@ export const useAuthStore = defineStore("auth", {
   }),
 
   actions: {
+    addSession({ user }) {
+      this.user = user
+      localStorage.setItem("user", JSON.stringify(user))
+    },
     setSession({ accessToken, refreshToken, user }) {
       this.accessToken = accessToken
       this.refreshToken = refreshToken

@@ -1,19 +1,33 @@
-
 import { useAuthStore } from "~/stores/auth"
 
 export default defineNuxtRouteMiddleware((to) => {
   const auth = useAuthStore()
 
-  // prevent SSR mismatch
+  //  SSR issue
   if (process.server) return
 
+  // load auth from localStorage
   auth.loadFromStorage()
 
   const isLoggedIn = !!auth.accessToken
 
-  if (to.path === "/login") return
+  // =========================
+  // 🌐 PUBLIC ROUTES
+  // =========================
+  const publicPages = ["/login", "/register"]
 
-  if (!isLoggedIn) {
+  // =========================
+  // 🚫 NOT LOGGED IN
+  // =========================
+  if (!isLoggedIn && !publicPages.includes(to.path)) {
+    auth.clearSession() // optional but recommended
     return navigateTo("/login")
+  }
+
+  // =========================
+  // 🔐 ALREADY LOGGED IN
+  // =========================
+  if (isLoggedIn && publicPages.includes(to.path)) {
+    return navigateTo("/")
   }
 })
