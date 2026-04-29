@@ -53,7 +53,7 @@
                     </button>
                      <button
                       @click="handleLogout"
-                      v-show="auth.user !== null"
+                      v-show="auth.accessToken !== null"
                         class="flex items-center justify-center bg-sky-500 hover:bg-sky-700 p-1 rounded"
                         >
                          Logout

@@ -3,39 +3,24 @@
     <div class="w-full max-w-md bg-white p-6 rounded-xl shadow">
 
       <h1 class="text-2xl font-bold mb-6 text-center text-blue-950">Login</h1>
-
-      <form @submit.prevent="handleLogin" class="space-y-4">
-
-        <!-- Email -->
-        <input
-            v-model="form.email"
-            type="email"
-            placeholder="Email"
-            class="w-full border border-gray-500 p-3 rounded-lg placeholder-gray-400 focus:outline-none focus:border-blue-500 text-black"
+      <BaseForm
+        submitText="Login"
+        :isLoading="loading"
+        @submit="handleLogin"
+        :error="error"
+      >
+        <BaseInput
+          v-model="form.email"
+          type="email"
+          placeholder="Email"
         />
-        <!-- Password -->
-        <input
+        <BaseInput
           v-model="form.password"
           type="password"
           placeholder="Password"
-        class="w-full border border-gray-500 p-3 rounded-lg placeholder-gray-400 focus:outline-none focus:border-blue-500 text-black"
         />
-
-        <!-- Button -->
-        <button
-          type="submit"
-          class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600"
-          :disabled="loading"
-        >
-          {{ loading ? "Logging in..." : "Login" }}
-        </button>
-
-        <p v-if="error" class="text-red-500 text-sm text-center">
-          {{ error }}
-        </p>
-
-      </form>
-
+      </BaseForm>
+    
         <div class="flex justify-center mt-4">
             <NuxtLink
                 to="/register"

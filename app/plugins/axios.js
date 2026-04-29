@@ -2,13 +2,14 @@ import axios from "axios"
 import { useAuthStore } from "~/stores/auth"
 
 export default defineNuxtPlugin((nuxtApp) => {
+    var baseURL = "https://api.escuelajs.co/api/v1"
     const auth = useAuthStore()
 
     // =========================
     // 🌐 Axios instance
     // =========================
     const api = axios.create({
-        baseURL: "https://api.escuelajs.co/api/v1",  /// Platzi Fake Store API
+        baseURL: baseURL,  /// Platzi Fake Store API
         timeout: 10000,
         headers: {
             "Content-Type": "application/json",
@@ -24,6 +25,13 @@ export default defineNuxtPlugin((nuxtApp) => {
         if (token) {
             config.headers.Authorization = `Bearer ${token}`
         }
+         
+        // 🟡 LOG REQUEST
+      
+        console.log("print------>url-api: ", `${config.baseURL}${config.url}`)
+        console.log("print------>Method: ", `${config.method}`)
+        console.log("print------>Param->QueryParameters: ", `${JSON.stringify(config.params || {})}`)
+        console.log("print------>Param->Data: ", `${JSON.stringify(config.data || {})}`)
 
         return config
     })
@@ -50,9 +58,20 @@ export default defineNuxtPlugin((nuxtApp) => {
     // 🚨 RESPONSE INTERCEPTOR
     // =========================
     api.interceptors.response.use(
-        (response) => response,
+        (response) =>{
+
+            // 🟢 LOG SUCCESS RESPONSE
+            console.log(`response Method: [${response.config.method}] Success`)
+            
+            // console.log("response Data:", `${JSON.stringify(response.data)}`)
+    
+            return response
+        },
         async (error) => {
             const originalRequest = error.config
+            // 🔴 LOG ERROR
+           
+            console.log("response error:", `[${originalRequest?.method}] Error -> ${error.message}`)
 
             // ❌ If 401 → try refresh token
             if (error.response?.status === 401 && !originalRequest._retry) {
@@ -75,7 +94,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
                     // 🔄 CALL REFRESH API (change endpoint if needed)
                     const res = await axios.post(
-                        "https://api.escuelajs.co/api/v1/auth/refresh-token",
+                        `${baseURL}/auth/refresh-token`,
                         {
                             refreshToken,
                         }

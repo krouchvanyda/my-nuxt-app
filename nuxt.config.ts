@@ -24,6 +24,7 @@ export default defineNuxtConfig({
   },
   css: [
     './app/assets/css/main.css',
+    'primeicons/primeicons.css', /// add this line for icons
   ],
   vite: {
     optimizeDeps: {

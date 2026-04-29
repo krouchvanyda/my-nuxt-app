@@ -3,52 +3,46 @@
     <div class="w-full max-w-md bg-white p-6 rounded-xl shadow">
 
       <h1 class="text-2xl font-bold mb-6 text-center text-blue-950">Register</h1>
-
-      <form @submit.prevent="handleRegister" class="space-y-4">
-        
-        <!-- Email -->
-        <input
-            v-model="form.name"
-            type="text"
-            placeholder="Name"
-            class="w-full border border-gray-500 p-3 rounded-lg placeholder-gray-400 focus:outline-none focus:border-blue-500 text-black"
-        />
-
-        <!-- Email -->
-        <input
-            v-model="form.email"
-            type="email"
-            placeholder="Email"
-            class="w-full border border-gray-500 p-3 rounded-lg placeholder-gray-400 focus:outline-none focus:border-blue-500 text-black"
-        />
-        <!-- Password -->
-        <input
-          v-model="form.password"
-          type="password"
-          placeholder="Password"
-        class="w-full border border-gray-500 p-3 rounded-lg placeholder-gray-400 focus:outline-none focus:border-blue-500 text-black"
-        />
-
-        <!-- Button -->
-        <button
-          type="submit"
-          class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600"
-          :disabled="loading"
+     <BaseForm 
+      :isLoading="loading"
+      submitText="Register"
+      @submit="handleRegister"
+      :error="error"
+     >
+      <BaseInput
+        v-model="form.name"
+        placeholder="Name"
+      />
+      <BaseInput
+        v-model="form.email"
+        placeholder="Email"
+      />
+      <BaseInput
+        v-model="form.password"
+        placeholder="Password"
+        type="password"
+      />
+    </BaseForm>
+    <div class="flex justify-center mt-4 space-x-1">
+        <p
+          class="flex items-center justify-center text-black"
         >
-          {{ loading ? "Registering..." : "Register" }}
-        </button>
-
-        <p v-if="error" class="text-red-500 text-sm text-center">
-          {{ error }}
+          Already have an account? 
         </p>
-
-      </form>
+        <NuxtLink
+          to="/login"
+          class="flex items-center justify-center text-green-500 hover:text-green-700 "
+        >
+          Login
+        </NuxtLink>
+    </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { reactive, ref } from "vue"
+import BaseInput from "~/components/base/BaseInput.vue";
 import { useAuthStore } from "~/stores/auth"
 
 const auth = useAuthStore();
